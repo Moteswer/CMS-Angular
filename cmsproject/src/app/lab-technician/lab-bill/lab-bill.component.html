@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center mb-4">Bill Receipt</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Patient ID:</strong> {{ diagnosisList[0].patient.patient_id }}</p>
+                    <p><strong>Patient Name:</strong> {{ diagnosisList[0].patient.first_name }}</p>
+                    <p><strong>Date of Birth:</strong> {{ diagnosisList[0].patient.date_of_birth | date:'mediumDate' }}</p>
+                    <p><strong>Gender:</strong> {{ diagnosisList[0].patient.gender }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Doctor Name:</strong> {{ diagnosisList[0].doctor.first_name }}</p>
+                    <p><strong>Test ID:</strong> {{ diagnosisList[0].test[0].test_id }}</p>
+                    <p><strong>Test Name:</strong> {{ diagnosisList[0].test[0].name }}</p>
+                    <p><strong>Test Amount:</strong> {{ diagnosisList[0].test[0].price }}</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <p><strong>Date:</strong> {{ diagnosisList[0].diagnosis.datetime | date:'mediumDate'}}</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <p><strong>Total Amount:</strong> {{ getTotalAmount() }}</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <button class="btn btn-primary" (click)="printBill()">Print Bill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

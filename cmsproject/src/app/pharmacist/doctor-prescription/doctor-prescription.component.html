@@ -1,0 +1,43 @@
+<div *ngIf="diagnosisList && diagnosisList.length > 0">
+    <h2>Diagnosis List</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Patient Id</th>
+          <th>Patient Name</th>
+          <th>Doctor Name</th>
+          <th>Medicine Name</th>
+          <th>Dosage</th>
+          <th>Contact</th>
+          <th>Gender</th>
+          <th>DoB</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let diagnosis of diagnosisList">
+          <td>{{ diagnosis.diagnosis.diagnosis_id }}</td>
+          <td>{{ diagnosis.patient.first_name }}</td>
+          <td>{{ diagnosis.doctor.first_name }}</td>
+          <td>{{ diagnosis.diagnosis.medicine }}</td>
+          <td>{{ diagnosis.diagnosis.dosage }}</td>
+          <td>{{ diagnosis.patient.phone_number }}</td>
+          <td>{{ diagnosis.patient.gender }}</td>
+          <td>{{ diagnosis.patient.date_of_birth }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="checkMedicine(diagnosis.diagnosis.medicine, diagnosis.diagnosis.diagnosis_id)">Give Medicine</button>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+    
+  
+  <div *ngIf="diagnosisList && diagnosisList.length === 0">
+    <p>No diagnosis records found.</p>
+  </div>
+  
+  <div *ngIf="!diagnosisList">
+    <p>Loading...</p>
+  </div>
+  

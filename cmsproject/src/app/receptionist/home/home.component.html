@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management</title>
+    <!-- Bootstrap CSS -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .profile-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+
+        .profile-popup input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .profile-popup button {
+            padding: 10px 20px;
+            margin-right: 10px;
+        }
+
+        .profile-popup button:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div style="text-align: right;">
+        <a width="40" height="40" (click)="toggleProfilePopup()">Profile</a>
+    </div>
+
+    <div class="popup" id="appointmentPopup" *ngIf="showAppointmentPopupFlag">
+        <h2>Book Appointment</h2>
+        <label for="patientPhoneNumber">Patient Phone Number:</label>
+        <input type="text" id="patientPhoneNumber" name="patientPhoneNumber" [(ngModel)]="patientPhoneNumber">
+        <button type="button" (click)="checkPatientAndBookAppointment()">Check and Book</button>
+    </div>
+
+    <div class="profile-popup" *ngIf="showProfilePopup">
+        <h2>Welcome Receptionist</h2>
+        <form *ngIf="isChangingPassword">
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+            <div *ngIf="confirmPassword !== newPassword" class="text-danger">Passwords do not match.</div>
+
+            <button type="button" (click)="submitPasswordChange()">Submit</button>
+        </form>
+        <button type="button" (click)="togglePasswordChange()">Change Password</button>
+        <button type="button" (click)="logout()">Logout</button>
+    </div>
+
+    <h1>Patient Management System</h1>
+
+
+    <div class="btn-container">
+
+        <button id="addPatientButton" class="btn btn-primary" (click)="navigateToAddPatientForm()">Add Patient</button>
+
+
+        <button id="searchPatientButton" class="btn btn-secondary" (click)="navigateToPatientList()">List
+            Patient</button>
+
+
+        <button id="bookAppointmentButton" class="btn btn-info" (click)="showAppointmentPopup()">Book An
+            Appointment</button>
+    </div>
+
+
+
+</body>
+
+</html>

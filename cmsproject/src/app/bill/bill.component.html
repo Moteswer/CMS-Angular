@@ -1,0 +1,40 @@
+<a routerLink="/receptionist" class="btn btn-primary mb-3">Back to receptionist</a>
+
+
+<div class="container">   
+   <div *ngIf="patient" class="bg-light p-3 mb-3">
+     <h2 class="text-dark">Patient Details</h2>
+     <h2>Name: <strong class="text-dark">{{ patient.first_name }}</strong></h2>
+     <p><strong class="text-dark">Date of Birth:</strong> {{ patient.date_of_birth | date }}</p>
+     <!-- Add other patient details as needed -->
+   </div>
+   
+   <div *ngIf="appointments">
+     <h2 class="text-dark">Bill Details</h2>
+     <div *ngFor="let appointment of appointments" class="mt-3 bg-light p-3">
+       <div class="card-body">
+         <h3 class="card-title">TOKEN: {{ appointment.token_no }}</h3>
+         <p class="card-text"><strong class="text-dark">Appointment ID:</strong> {{ appointment.appointment_id }}</p>
+         <p class="card-text"><strong class="text-dark">Date:</strong> {{ appointment.booking_date | date }}</p>
+         <p class="card-text"><strong class="text-dark">Time:</strong> {{ appointment.appointment_time.split('.')[0] }}</p>
+
+
+       
+         <!-- Display doctor details for this appointment -->
+         <div *ngIf="doctors[appointment.appointment_id]" class="mt-3 bg-light p-3">
+           <h4 class="text-primary">Doctor Details</h4>
+           <p><strong class="text-dark">Name:</strong> {{ doctors[appointment.appointment_id].first_name }}</p>
+           <p><strong class="text-dark">Specialization:</strong> {{ doctors[appointment.appointment_id].specialization_detail.specialization }}</p>
+           <p><strong class="text-dark">Consultation Fee:</strong> {{ doctors[appointment.appointment_id].consultation_fee }}</p>
+           <!-- Add other doctor details as needed -->
+         </div>
+
+         <h6 class="text-dark mt-3">GST: 15%</h6>
+         <h4 class="text-dark mt-3">Total Consultation Fees (incl. GST): {{ calculateTotal(appointments) | currency:'INR':'symbol':'1.2-2' }}</h4>
+         
+         <!-- Print Bill button -->
+         <button class="btn btn-primary" (click)="printBill()">Print Bill</button>
+       </div>
+     </div>
+   </div>
+</div>

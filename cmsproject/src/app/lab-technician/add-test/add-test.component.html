@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Add Test</h2>
+    <form (ngSubmit)="onSubmit()" >
+      <div class="form-group">
+        <label for="name">Test Name:</label>
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="newTest.name" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" class="form-control" id="price" name="price" [(ngModel)]="newTest.price" required>
+      </div>
+      <div class="form-group">
+        <label for="lowRange">Low Range:</label>
+        <input type="number" class="form-control" id="lowRange" name="lowRange" [(ngModel)]="newTest.low_range" required>
+      </div>
+      <div class="form-group">
+        <label for="highRange">High Range:</label>
+        <input type="number" class="form-control" id="highRange" name="highRange" [(ngModel)]="newTest.high_range" required>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>

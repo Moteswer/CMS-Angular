@@ -1,0 +1,76 @@
+
+<style>
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+
+    .popup-content {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: red;
+    }
+</style>
+
+<div *ngIf="patient">
+    <h2>Patient Details</h2>
+    <p>Patient Name: {{ patient.first_name }}</p>
+    <!-- Display other patient details here -->
+</div>
+
+<div *ngIf="doctors && doctors.length > 0">
+    <h2>Available Doctors</h2>
+    <table class="table table-striped table-bordered">
+        <!-- Table content -->
+        <thead>
+            <tr>
+                <th>Doctor ID</th>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Consultation Fee</th>
+                <th>Available Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doctor of doctors">
+                <td>{{ doctor.doctor_id }}</td>
+                <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+                <td>{{ doctor.specialization_detail.specialization }}</td>
+                <td>{{ doctor.consultation_fee }}</td>
+                <td>{{ doctor.Duty_time }}</td>
+                <td><button class="btn btn-primary"
+                        (click)="selectDoctor(doctor.doctor_id, patient.patient_id)">Select Doctor</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="showAppointmentPopup" class="popup">
+        <div class="popup-content">
+            <span (click)="closePopup()" class="close">&times;</span>
+            <h2>Select Date and Time</h2>
+            <!-- Date and time picker -->
+            <!-- You can use any date/time picker library or create your own -->
+            <!-- Example: -->
+            <input type="datetime-local" [(ngModel)]="selectedDateTime">
+            <button (click)="bookAppointment(selectedDateTime)">Confirm</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div *ngIf="diagnosisList && diagnosisList.length > 0">
+                <h2 class="text-center">Diagnosis List</h2>
+                <h3>Details of Diagnosis 1</h3>
+                <form class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label for="diagnosisId" class="form-label">Diagnosis ID:</label>
+                            <input type="text" class="form-control" id="diagnosisId" name="diagnosisId"
+                                [value]="diagnosisList[0].diagnosis.diagnosis_id" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="patientId" class="form-label">Patient Name:</label>
+                            <input type="text" class="form-control" id="patientId" name="patientId"
+                                [value]="diagnosisList[0].patient.first_name" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="doctorId" class="form-label">Doctor Name:</label>
+                            <input type="text" class="form-control" id="doctorId" name="doctorId"
+                                [value]="diagnosisList[0].doctor.first_name" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="medicineName" class="form-label">Medicine Name:</label>
+                            <input type="text" class="form-control" id="medicineName" name="medicineName"
+                                [value]="diagnosisList[0].diagnosis.medicine" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="contactNumber" class="form-label">Contact Number:</label>
+                            <input type="text" class="form-control" id="contactNumber" name="contactNumber"
+                                [value]="diagnosisList[0].patient.phone_number" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="dosage" class="form-label">Dosage:</label>
+                            <input type="text" class="form-control" id="dosage" name="dosage"
+                                [value]="diagnosisList[0].diagnosis.dosage" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="quantity" class="form-label">Quantity:</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity"
+                                (input)="calculateMRP()" min="1" required>
+                            <div class="invalid-feedback" *ngIf="quantity === 0 && quantity !== null">Quantity must not be zero.</div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="mrp" class="form-label">MRP:</label>
+                            <input type="text" class="form-control" id="mrp" name="mrp" [value]="mrp" readonly>
+                            <div class="invalid-feedback" *ngIf="mrp === 0 && mrp !== null">MRP must not be zero.</div>
+                        </div>
+                    </div>
+                    <!-- Generate Bill Button -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" [disabled]="quantity === 0 || mrp === 0" (click)="generateBill()">Generate Bill</button>
+                    </div>
+                </form>
+            </div>
+
+            <div *ngIf="diagnosisList && diagnosisList.length === 0" class="text-center">
+                <p>No diagnosis records found.</p>
+            </div>
+
+            <div *ngIf="!diagnosisList" class="text-center">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

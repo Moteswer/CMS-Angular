@@ -1,0 +1,89 @@
+<style>
+    table.table tbody tr.inactive-row {
+        background-color: #ff0000;
+        /* Adjust color as needed */
+    }
+</style>
+
+
+
+
+<div class="container">
+    <a routerLink="/admin" class="btn btn-primary mb-3">Back to Admin</a> &nbsp; 
+    <a routerLink="/login" class="btn btn-danger mb-3 ml-2">Logout</a> <!-- Logout button -->
+    <div class="header">
+        <div class="form-control">
+            <input class="form-control" type="text" placeholder="Search here" [(ngModel)]="filter">
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>PhoneNumber</th>
+            <th>DoB</th>
+            <th>Address</th>
+            <th>Qualification</th>
+            <th>Role</th>
+            <th>Joining_date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let emp of staffs | filter: filter; let i = index">
+            <tr [ngClass]="{ 'inactive-row': !emp.is_active }">
+                <td>{{emp.staff_id}}</td>
+                <td>
+                    <ng-container>{{emp.first_name}}</ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{emp.last_name}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedStaff[i].last_name" type="text">
+                </td>
+                <td>
+                    <ng-container>{{emp.email}}</ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{emp.phone_number}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedStaff[i].phone_number" type="text">
+                </td>
+                <td>
+                    <ng-container>{{emp.date_of_birth}}</ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{emp.address}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedStaff[i].address" type="text">
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{emp.qualification}}</ng-container>
+                    <select *ngIf="editingRow[i]" [(ngModel)]="editedStaff[i].qualification">
+                        <option value="10th">10th</option>
+                        <option value="12th">12th</option>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Post Graduate">Post Graduate</option>
+                    </select>
+                </td>
+                <td>
+                    <ng-container>{{emp.role_detail.name}}</ng-container>
+                </td>
+                <td>
+                    <ng-container>{{emp.joining_date}}</ng-container>
+                </td>
+                <td>
+                    <ng-container>{{emp.is_active ? 'Active' : 'Inactive'}}</ng-container>
+                </td>
+                <td>
+                    <button *ngIf="!editingRow[i]" class="btn btn-info" (click)="editRow(i)">EDIT</button>
+                    <button *ngIf="editingRow[i]" class="btn btn-success" (click)="saveRow(i)">SAVE</button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(i)">X</button>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

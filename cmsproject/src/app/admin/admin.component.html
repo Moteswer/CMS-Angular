@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Body styles */
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f1f3f4;
+            /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 600px;
+            /* Limit container width */
+            padding: 20px;
+            background-color: #fff;
+            /* White background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Box shadow */
+            border-radius: 8px;
+            /* Rounded corners */
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 80px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #333;
+            /* Dark gray text */
+        }
+
+        /* Button container styles */
+        .btn-container {
+            text-align: center;
+        }
+
+        /* Button styles */
+        .btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4c86af;
+            /* Green button color */
+            color: #fff;
+            margin-bottom: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #4caf8b;
+            /* Darker green on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="background-color: rgb(25, 144, 183);">
+            <h1>Welcome</h1>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn btn-primary mb-3" (click)="navigateToAddStaffForm()">Add Staff</button>&nbsp;
+            <button type="button" class="btn btn-primary mb-3" (click)="navigateToStaffList()">List Staff</button>
+            <br>
+            <button type="button" class="btn btn-primary mb-3" (click)="navigateToAddDoctorForm()">Add Doctor</button>&nbsp;
+            <button type="button" class="btn btn-primary mb-3" (click)="navigateToDoctorList()">List Doctor</button>
+            <br>
+           
+        </div>
+    </div>
+</body>
+
+</html>

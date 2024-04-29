@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Add New Medicine</h2>
+    <form (ngSubmit)="addMedicine()">
+      <div class="form-group">
+        <label for="medicineName">Medicine Name:</label>
+        <input type="text" class="form-control" id="medicineName" [(ngModel)]="newMedicine.medicine_name" name="medicineName">
+      </div>
+      <div class="form-group">
+        <label for="genericName">Generic Name:</label>
+        <input type="text" class="form-control" id="genericName" [(ngModel)]="newMedicine.generic_name" name="genericName">
+      </div>
+      <div class="form-group">
+        <label for="companyName">Company Name:</label>
+        <input type="text" class="form-control" id="companyName" [(ngModel)]="newMedicine.company_name" name="companyName">
+      </div>
+      <div class="form-group">
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="date" class="form-control" id="expiryDate" [(ngModel)]="newMedicine.expiry_date" name="expiryDate" #expiryDate="ngModel" required
+            [min]="minExpiryDate()">
+        <div *ngIf="expiryDate.invalid && (expiryDate.dirty || expiryDate.touched)" class="text-danger">
+            <div *ngIf="expiryDate.errors.required">
+                Expiry Date is required.
+            </div>
+            <div *ngIf="expiryDate.errors.min">
+                Expiry Date must be a future date.
+            </div>
+        </div>
+    </div>
+      <div class="form-group">
+        <label for="availableStock">Available Stock:</label>
+        <input type="number" class="form-control" id="availableStock" [(ngModel)]="newMedicine.available_stock" name="availableStock">
+      </div>
+      <div class="form-group">
+        <label for="medicinePrice">Medicine Price:</label>
+        <input type="number" class="form-control" id="medicinePrice" [(ngModel)]="newMedicine.medicine_price" name="medicinePrice">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Medicine</button>
+    </form>
+  </div>
+  

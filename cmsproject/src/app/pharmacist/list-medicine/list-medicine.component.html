@@ -1,0 +1,87 @@
+<style>
+    table.table tbody tr.inactive-row {
+        background-color: #ff0000;
+        /* Adjust color as needed */
+    }
+
+    .add-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .search-bar {
+        margin-right: 70px;
+        width: 1200px;
+    }
+</style>
+
+<div class="container">
+    <div class="header">
+        <a routerLink="/login" class="btn btn-danger mb-3 ml-2">Logout</a> <!-- Logout button -->
+        <div class="form-control search-bar">
+            <input class="form-control" type="text" placeholder="Search here" [(ngModel)]="filter">
+        </div>
+    </div>
+</div>
+<div>
+    <!-- Add button -->
+    <button class="btn btn-primary add-button" (click)="navigateToAddMedicineForm()">Add Medicine</button>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Medicine ID</th>
+            <th>Medicine Name</th>
+            <th>Generic Name</th>
+            <th>Company Name</th>
+            <th>Expiry Date</th>
+            <th>Available Stock</th>
+            <th>Medicine Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let pat of medicines | filter: filter; let i = index">
+            <tr [ngClass]="{ 'inactive-row': !pat.is_active }">
+                <td>{{pat.medicine_id}}</td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{pat.medicine_name}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedMedicine[i].medicine_name" type="text">
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{pat.generic_name}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedMedicine[i].generic_name" type="text">
+                </td>
+
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{pat.company_name}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedMedicine[i].company_name" type="text">
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{pat.expiry_date}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedMedicine[i].expiry_date" type="text">
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{pat.available_stock}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedMedicine[i].available_stock" type="text">
+                </td>
+
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{pat.medicine_price}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedMedicine[i].medicine_price" type="text">
+                </td>
+                <td>
+                    <ng-container>{{pat.is_active ? 'Active' : 'Inactive'}}</ng-container>
+                </td>
+                <td>
+                    <button *ngIf="!editingRow[i]" class="btn btn-info" (click)="editRow(i)">EDIT</button>
+                    <button *ngIf="editingRow[i]" class="btn btn-success" (click)="saveRow(i)">SAVE</button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(i)">X</button>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

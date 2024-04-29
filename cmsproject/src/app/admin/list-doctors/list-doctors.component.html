@@ -1,0 +1,84 @@
+<style>
+    table.table tbody tr.inactive-row {
+        background-color: #ff0000;
+        /* Adjust color as needed */
+    }
+</style>
+
+<div class="container">
+    <div class="header">
+        <a routerLink="/admin" class="btn btn-primary mb-3">Back to Admin</a> &nbsp; 
+        <a routerLink="/login" class="btn btn-danger mb-3 ml-2">Logout</a> <!-- Logout button -->
+        <div class="form-control">
+            <input class="form-control" type="text" placeholder="Search here" [(ngModel)]="filter">
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>PhoneNumber</th>
+            <th>DoB</th>
+            <th>Address</th>
+            <th>Qualification</th>
+            <th>Specialization</th>
+            <th>Joining_date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let doctor of doctors | filter: filter; let i = index">
+            <tr [ngClass]="{ 'inactive-row': !doctor.is_active }">
+                <td>{{doctor.doctor_id}}</td>
+                <td>
+                    <ng-container>{{doctor.first_name}}</ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{doctor.last_name}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedDoctor[i].last_name" type="text">
+                </td>
+                <td>
+                    <ng-container>{{doctor.email}}</ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{doctor.phone_number}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedDoctor[i].phone_number" type="text">
+                </td>
+                <td>
+                    <ng-container>{{doctor.date_of_birth}}</ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{doctor.address}}</ng-container>
+                    <input *ngIf="editingRow[i]" [(ngModel)]="editedDoctor[i].address" type="text">
+                </td>
+                <td>
+                    <ng-container *ngIf="!editingRow[i]">{{doctor.qualification}}</ng-container>
+                    <select *ngIf="editingRow[i]" [(ngModel)]="editedDoctor[i].qualification">
+                        <option value="MBBS">MBBS</option>
+                        <option value="MD">MD</option>
+                        <option value="Ph.D">Ph.D</option>
+                    </select>
+                </td>
+                <td>
+                    <ng-container>{{doctor.specialization_detail.specialization}}</ng-container>
+                <td>
+                    <ng-container>{{doctor.date_joined}}</ng-container>
+                </td>
+                <td>
+                    <ng-container>{{doctor.is_active}}</ng-container>
+                </td>
+                <td>
+                    <button *ngIf="!editingRow[i]" class="btn btn-info" (click)="editRow(i)">EDIT</button>
+                    <button *ngIf="editingRow[i]" class="btn btn-success" (click)="saveRow(i)">SAVE</button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(i)">X</button>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

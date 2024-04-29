@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Management</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include custom CSS -->
+
+    <style>
+        table.table tbody tr.inactive-row {
+            background-color: #6b6262;
+            /* Adjust color as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Search here" [(ngModel)]="filter">
+        </div>
+    </div>
+
+    <div class="container">
+        <button class="btn btn-primary float-right mt-3 mr-3" (click)="onAdd()">Add</button>
+    </div>
+
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <!-- Table content here -->
+        </table>
+    </div>
+
+    <!-- Include Angular and Bootstrap scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+
+
+<div class="container">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Low Range</th>
+                <th>High Range</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of tests | filter:filter; let i = index">
+                <tr [ngClass]="{ 'inactive-row': !item.is_active }">
+                    <td>{{ item.test_id }}</td>
+                    <td>
+                        {{ item.name }}
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!editingRow[i]; else editModePrice">
+                            {{ item.price }}
+                        </ng-container>
+                        <ng-template #editModePrice>
+                            <input type="number" [(ngModel)]="editedTest.price">
+                        </ng-template>
+                    </td>
+                    <td>
+                        {{ item.low_range }}
+                    </td>
+                    <td>
+                        {{ item.high_range }}
+                    </td>
+                    <td>
+                        {{ item.is_active }}
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!editingRow[i]">
+                            <button class="btn btn-info" (click)="editRow(i)">EDIT</button>
+                        </ng-container>
+                        <ng-container *ngIf="editingRow[i]">
+                            <button class="btn btn-success" (click)="saveRow(i)">SAVE</button>
+                            <button class="btn btn-secondary" (click)="cancelEdit(i)">CANCEL</button>
+                        </ng-container>
+                        <!-- <button class="btn btn-sm btn-outline-danger" (click)="deleteRow(i)">X</button> -->
+                        <button class="btn btn-sm btn-outline-danger" (click)="disableRow(i)">X</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

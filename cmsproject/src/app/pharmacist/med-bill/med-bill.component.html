@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles can be added here */
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Bill Details</h2>
+        <div class="row">
+            <div class="col">
+                <p><strong>Diagnosis ID:</strong> {{ diagnosisList[0].diagnosis_id }}</p>
+                <p><strong>Patient Name:</strong> {{ diagnosisList[0].patient_name }}</p>
+                <p><strong>Doctor Name:</strong> {{ diagnosisList[0].doctor_name }}</p>
+                <p><strong>Medicine Name:</strong> {{ diagnosisList[0].medicine_name }}</p>
+                <p><strong>Contact Number:</strong> {{ diagnosisList[0].contact_number }}</p>
+                <p><strong>Dosage:</strong> {{ diagnosisList[0].dosage }}</p>
+                <p><strong>Quantity:</strong> {{ diagnosisList[0].quantity }}</p>
+                <p><strong>MRP:</strong> {{ diagnosisList[0].mrp }}</p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col text-center">
+                <button class="btn btn-primary" (click)="printBill()">Print Bill</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

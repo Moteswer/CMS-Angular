@@ -1,0 +1,106 @@
+<div class="container">
+  <h2>Register New Patient</h2>
+  <form (ngSubmit)="addPatient()">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="first_name" required>
+      <div *ngIf="first_name.trim().length < 3 || !isValidName(first_name)" class="text-danger">
+        First Name must be at least 3 characters long and contain only letters.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="last_name" required>
+      <div *ngIf="last_name.trim().length < 1 || !isValidName(last_name)" class="text-danger">
+        Last Name must be at least 1 characters long and contain only letters.
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="enteredEmail"
+        (blur)="checkEmailExists()">
+      <div *ngIf="emailExistsError" class="text-danger">{{ emailExistsError }}</div>
+    </div>
+
+
+
+
+    <div class="form-group">
+      <label for="phone_number">Phone Number</label>
+      <input type="tel" class="form-control" id="phone_number" name="phone_number" [(ngModel)]="enteredPhoneNumber"
+        (blur)="checkPhoneNumberExists()">
+      <div *ngIf="phoneNumberExistsError" class="text-danger">{{ phoneNumberExistsError }}</div>
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select class="form-control" id="gender" name="gender" [(ngModel)]="patient.gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="others">Others</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dateOfBirth">Date of Birth</label>
+      <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="patient.date_of_birth"
+        required [max]="getMaxDateOfBirth()">
+      <div *ngIf="!isValidDateOfBirth(patient.date_of_birth)"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <textarea class="form-control" id="address" name="address" [(ngModel)]="patient.address" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="blood_group">Blood Group</label>
+      <textarea class="form-control" id="blood_group" name="blood_group" required 
+                minlength="2" maxlength="3"
+                pattern="A\+|A-|B\+|B-|AB\+|AB-|O\+|O-" 
+                title="Enter a valid blood group (A+, A-, B+, B-, AB+, AB-, O+, O-)"
+                [(ngModel)]="patient.blood_group" #bloodGroup="ngModel" 
+                [ngClass]="{ 'is-invalid': bloodGroup.invalid && (bloodGroup.dirty || bloodGroup.touched) }"></textarea>
+      <div class="invalid-feedback" *ngIf="bloodGroup.invalid && (bloodGroup.dirty || bloodGroup.touched)">
+          Blood group is required and must be a valid blood group 
+      </div>
+      <div class="valid-feedback" [hidden]="!bloodGroup.invalid || (bloodGroup.dirty || bloodGroup.touched)">
+          Blood group is valid.
+      </div>
+  </div>
+  
+  
+
+
+
+
+
+  <div class="form-group">
+    <label for="height">Height</label>
+    <input type="text" class="form-control" id="height" name="height" [(ngModel)]="patient.height" required pattern="^[0-9]+(\.[0-9]+)?$">
+    <div class="invalid-feedback">Height must be a valid number.</div>
+  </div>
+  
+  <div class="form-group">
+    <label for="weight">Weight</label>
+    <input type="text" class="form-control" id="weight" name="weight" [(ngModel)]="patient.weight" required pattern="^[0-9]+(\.[0-9]+)?$">
+    <div class="invalid-feedback">Weight must be a valid number.</div>
+  </div>
+  
+
+
+    <div class="form-group">
+      <label for="date_registered">date_registered</label>
+      <input type="date" class="form-control" id="date_registered" name="date_registered"
+        [(ngModel)]="patient.date_registered" required [max]="getMaxDate()">
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>

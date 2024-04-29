@@ -1,0 +1,105 @@
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .patient-details {
+        flex: 1;
+        margin-right: 20px;
+        /* Adjust spacing between sections */
+    }
+
+    .tests-appointments {
+        flex: 1;
+    }
+    
+    
+</style>
+
+
+<div class="container">
+    <div class="patient-details">
+        <h2>Patient Details</h2>
+
+        <div>
+            <p><strong>Name:</strong> {{ patient.first_name }}</p>
+            <p><strong>Gender:</strong> {{ patient.gender }}</p>
+            <p><strong>DoB:</strong> {{ patient.date_of_birth }}</p>
+            <p><strong>Blood Group:</strong> {{ patient.blood_group }}</p>
+            <p><strong>Contact Number:</strong> {{ patient.phone_number }}</p>
+            <!-- Add more patient details here as needed -->
+        </div>
+    </div>
+
+
+    <br>
+    <div *ngIf="doctors && doctors.length > 0">
+       
+      <br>
+      <br>
+
+        <div *ngFor="let doc of doctors" class="test-item">
+            <p style="position:absolute;left: 1230px;"><strong>Doctor Name:</strong> {{ doc.first_name }}</p>
+            <br>
+            <!-- Add more doctor details here -->
+        </div>
+        <br>
+        
+    </div>
+    <br>
+    <br>
+
+
+    <div *ngIf="appointments && appointments.length > 0">
+     <br>
+     <br>
+
+
+        <div *ngFor="let appointment of appointments" class="appointment-item">
+            <br>
+            <p><strong>Collected On:</strong> {{ appointment.booking_date }}</p>
+            <!-- Add more appointment details here -->
+        </div>
+    </div>
+    <div *ngIf="!(appointments && appointments.length > 0)">
+        <p>No appointment details available.</p>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div *ngIf="tests && tests.length > 0">
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Low Range</th>
+                <th>High Range</th>
+                <th>Price</th>
+                <th>Status</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let test of tests">
+                <td>{{ test.name }}</td>
+                <td>{{ test.low_range }}</td>
+                <td>{{ test.high_range }}</td>
+                <td>{{ test.price }}</td>
+                <td>Normal</td>
+                <!-- Add more test details here -->
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4 style="margin-left: 1000px;">Total Amount: 700Rs</h4>
+
+
+<div *ngIf="!tests || tests.length === 0">
+    <p>No test details available.</p>
+</div>
+
+<button class="btn btn-primary" style="margin-left: 1000px;" (click)="printBill()">Print Report</button>

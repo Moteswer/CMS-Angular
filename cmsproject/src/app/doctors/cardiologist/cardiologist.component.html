@@ -1,0 +1,107 @@
+<style>
+    /* Custom table style */
+    .table-grey {
+        background-color: #f8f9fa;
+    }
+
+    /* Position profile icon to top right corner */
+    .profile-icon-container {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 9999; /* Ensure it's above other content */
+    }
+
+    /* Apply styles to disabled rows */
+    .disabled-row {
+        background-color: rgba(0, 0, 0, 0.1); /* Darken the background color */
+    }
+</style>
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Date</th>
+                            <th>Token No.</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>DoB</th>
+                            <th>Height</th>
+                            <th>Weight</th>
+                            <th>Gender</th>
+                            <th>Blood Group</th>
+                            <th>Action</th> <!-- Add this column for action buttons -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows for appointments where the diagnosis button is working -->
+                        <ng-container *ngFor="let appointment of appointments">
+                            <tr *ngIf="isCurrentDate(appointment.booking_date)">
+                                <td>{{ appointment.appointment_id }}</td>
+                                <td>{{ appointment.booking_date | date }}</td>
+                                <td>{{ appointment.token_no }}</td>
+                                <td>{{ appointment.patient?.first_name }}</td>
+                                <td>{{ appointment.patient?.phone_number }}</td>
+                                <td>{{ appointment.patient?.date_of_birth }}</td>
+                                <td>{{ appointment.patient?.height }}</td>
+                                <td>{{ appointment.patient?.weight }}</td>
+                                <td>{{ appointment.patient?.gender }}</td>
+                                <td>{{ appointment.patient?.blood_group }}</td>
+                                <td>
+                                    <button class="btn btn-primary" (click)="navigateToDiagnosis(appointment.doctor?.doctor_id,appointment.patient?.patient_id, appointment.appointment_id)">Diagnosis</button>
+                                </td> <!-- Action button for diagnosis -->
+                            </tr>
+                        </ng-container>
+                        <!-- Rows for appointments where the diagnosis button is not working -->
+                        <ng-container *ngFor="let appointment of appointments">
+                            <tr *ngIf="!isCurrentDate(appointment.booking_date)">
+                                <td>{{ appointment.appointment_id }}</td>
+                                <td>{{ appointment.booking_date | date }}</td>
+                                <td>{{ appointment.token_no }}</td>
+                                <td>{{ appointment.patient?.first_name }}</td>
+                                <td>{{ appointment.patient?.phone_number }}</td>
+                                <td>{{ appointment.patient?.date_of_birth }}</td>
+                                <td>{{ appointment.patient?.height }}</td>
+                                <td>{{ appointment.patient?.weight }}</td>
+                                <td>{{ appointment.patient?.gender }}</td>
+                                <td>{{ appointment.patient?.blood_group }}</td>
+                                <td>
+                                    <button class="btn btn-primary" [disabled]="true">Diagnosis</button>
+                                </td> <!-- Disabled action button for non-current date rows -->
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="profile-icon-container">
+    <img src="profile-icon.png" alt="Profile" width="40" height="40" (click)="toggleProfilePopup()">
+</div>
+
+<div class="profile-popup" *ngIf="showProfilePopup">
+    <h2>Welcome Doctor</h2>
+    <form *ngIf="isChangingPassword">
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+        <div *ngIf="confirmPassword !== newPassword" class="text-danger">Passwords do not match.</div>
+
+        <button type="button" (click)="submitPasswordChange()">Submit</button>
+    </form>
+    <button type="button" (click)="togglePasswordChange()">Change Password</button>
+    <button type="button" (click)="logout()">Logout</button>
+</div>

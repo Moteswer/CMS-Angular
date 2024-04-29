@@ -1,0 +1,111 @@
+<div class="container">
+    <h2>Register New Staff</h2>
+    <form (ngSubmit)="addStaff()">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="first_name" required>
+        <div *ngIf="first_name.trim().length < 3 || !isValidName(first_name)" class="text-danger">
+          First Name must be at least 3 characters long and contain only letters.
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="last_name" required>
+        <div *ngIf="last_name.trim().length < 1 || !isValidName(last_name)" class="text-danger">
+          Last Name must be at least 1 characters long and contain only letters.
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="enteredEmail" (blur)="checkEmailExists()">
+        <div *ngIf="emailExistsError" class="text-danger">{{ emailExistsError }}</div>
+      </div>
+      
+
+
+      
+  
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="staff.password" #password="ngModel" required minlength="3" pattern="^\S+$">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)">
+          <div *ngIf="password.errors.required">
+            Password is required
+          </div>
+          <div *ngIf="password.errors.minlength">
+            Password must be at least 3 characters long
+          </div>
+          <div *ngIf="password.errors.pattern">
+            Password cannot contain spaces
+          </div>
+        </div>
+      </div>
+      
+  
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+        <div *ngIf="staff.password !== confirmPassword" class="text-danger">Passwords do not match.</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        <input type="tel" class="form-control" id="phone_number" name="phone_number" [(ngModel)]="enteredPhoneNumber" (blur)="checkPhoneNumberExists()">
+        <div *ngIf="phoneNumberExistsError" class="text-danger">{{ phoneNumberExistsError }}</div>
+      </div>
+  
+     
+  
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select class="form-control" id="gender" name="gender" [(ngModel)]="staff.gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="others">Others</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea class="form-control" id="address" name="address" [(ngModel)]="staff.address" required></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="qualification">Qualification</label>
+        <select class="form-control" id="qualification" name="qualification" [(ngModel)]="staff.qualification" required>
+          <option value="10th">10th</option>
+          <option value="12th">12th</option>
+          <option value="graduate">Graduate</option>
+          <option value="postGraduate">Post Graduate</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="joiningDate">Joining Date</label> 
+        <input type="date" class="form-control" id="joiningDate" name="joiningDate" [(ngModel)]="staff.joining_date" required
+               [max]="getCurrentDate()">
+      </div>
+      
+  
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control" id="role_id" name="role" [(ngModel)]="staff.role" required>
+          <option *ngFor="let role of roles" [value]="role.role_id">{{ role.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Date of Birth</label>
+        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="staff.date_of_birth" required
+               [max]="getMaxDateOfBirth()">
+        <div *ngIf="!isValidDateOfBirth(staff.date_of_birth)" class="text-danger">You must be at least 18 years old.</div>
+      </div>
+      
+  
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+
